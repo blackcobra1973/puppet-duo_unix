@@ -20,6 +20,9 @@ class duo_unix (
   $prompts = '3',
   $accept_env_factor = 'no',
   $manage_ssh = true,
+  $manage_port_overlay_dir = false,
+  $manage_portage_ebuild = true,
+  $portage_overlay_dir = '/usr/local/portage/sys-auth',
   $pam_unix_control = 'requisite',
   $package_version = 'installed',
 ) {
@@ -64,6 +67,20 @@ class duo_unix (
       }
 
       include duo_unix::apt
+      include duo_unix::generic
+    }
+    'Gentoo': {
+      $duo_package = 'duo_unix'
+      $ssh_service = 'sshd'
+      $pam_file    = '/etc/pam.d/system-auth'
+
+      $pam_module  = $::architecture ? {
+        i386   => '/lib/security/pam_duo.so',
+        i686   => '/lib/security/pam_duo.so',
+        x86_64 => '/lib64/security/pam_duo.so'
+      }
+
+      include duo_unix::portage
       include duo_unix::generic
     }
     default: {
