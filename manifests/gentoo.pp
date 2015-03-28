@@ -46,13 +46,13 @@ class duo_unix::gentoo {
     }
 
     package { 'duo_unix':
-      ensure  => installed,
+      ensure  => $package_state,
       require => File["${portage_overlay_dir}/duo_unix"]
     }
   }
   else {
     package { 'duo_unix':
-      ensure  => installed,
+      ensure  => $package_state,
     }
   }
 }
