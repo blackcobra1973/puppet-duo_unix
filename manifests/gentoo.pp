@@ -12,7 +12,6 @@
 #
 class duo_unix::gentoo {
   $portage_overlay_dir = $::duo_unix::portage_overlay_dir
-  $repo_uri  = 'http://pkg.duosecurity.com'
   $package_state = $::duo_unix::package_version
 
   if $::duo_unix::manage_ssh {
