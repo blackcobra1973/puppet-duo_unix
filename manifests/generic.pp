@@ -24,9 +24,18 @@ class duo_unix::generic {
   }
 
   if $duo_unix::manage_ssh {
-    service { $duo_unix::ssh_service:
-      ensure => running,
-      enable => true;
+    if $duo_unix::gentoo_systemd {
+      service { $duo_unix::ssh_service:
+        ensure   => running,
+        provider => $duo_unix::gentoo_provider,
+        enable   => true,
+      }
+    }
+    else {
+      service { $duo_unix::ssh_service:
+        ensure => running,
+        enable => true,
+      }
     }
   }
 
