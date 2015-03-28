@@ -44,13 +44,13 @@ class duo_unix::gentoo {
       group   =>  'root',
     }
 
-    package { 'duo_unix':
+    package { $duo_unix::duo_packag:
       ensure  => $package_state,
       require => File["${portage_overlay_dir}/duo_unix"]
     }
   }
   else {
-    package { 'duo_unix':
+    package { $duo_unix::duo_packag:
       ensure  => $package_state,
     }
   }
