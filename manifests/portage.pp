@@ -1,4 +1,4 @@
-# == Class: duo_unix::gentoo
+# == Class: duo_unix::portage
 #
 # Provides duo_unix for a portage environment (e.g. Gentoo )
 #
@@ -10,7 +10,7 @@
 #       make sure you add the ebuild content manually
 #       in your portage overlay.  Else this will fail.
 #
-class duo_unix::gentoo {
+class duo_unix::portage {
   $portage_overlay_dir = $::duo_unix::portage_overlay_dir
   $package_state = $::duo_unix::package_version
 
