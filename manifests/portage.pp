@@ -44,7 +44,7 @@ class duo_unix::portage {
       group   =>  'root',
     }
 
-    package { $duo_unix::duo_packag:
+    package { $duo_unix::duo_package:
       ensure  => $package_state,
       require => File["${portage_overlay_dir}/duo_unix"]
     }
