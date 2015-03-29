@@ -38,15 +38,20 @@ class duo_unix::portage {
       recurse => true,
       purge   => true,
       require => File[$portage_overlay_dir],
+      notify  => Exec['EIX-Update'],
       source  => 'puppet:///modules/duo_unix/duo_unix',
       mode    => '0644',
       owner   => 'root',
-      group   =>  'root',
+      group   => 'root',
     }
 
     package { $duo_unix::duo_package:
       ensure  => $package_state,
       require => File["${portage_overlay_dir}/duo_unix"]
+    }
+
+    exec { 'EIX-Update':
+      command => '/usr/bin/eix-update -q',
     }
   }
   else {
