@@ -47,7 +47,10 @@ class duo_unix::portage {
 
     package { $duo_unix::duo_package:
       ensure  => $package_state,
-      require => File["${portage_overlay_dir}/duo_unix"]
+      require => [
+                    File["${portage_overlay_dir}/duo_unix"],
+                    Exec['EIX-Update'],
+                 ],
     }
 
     exec { 'EIX-Update':
