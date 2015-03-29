@@ -87,7 +87,7 @@ class duo_unix (
       $pam_module  = $::architecture ? {
         i386   => '/lib/security/pam_duo.so',
         i686   => '/lib/security/pam_duo.so',
-        amd64  => '/lib64/security/pam_duo.so'
+        amd64  => '/lib64/security/pam_duo.so',
         x86_64 => '/lib64/security/pam_duo.so'
       }
 
