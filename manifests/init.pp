@@ -24,9 +24,11 @@ class duo_unix (
   $manage_portage_ebuild = true,
   $portage_overlay_dir = '/usr/local/portage/sys-auth',
   $gentoo_systemd = false,
+  $manage_pam = true,
   $pam_unix_control = 'requisite',
   $package_version = 'installed',
-) {
+)
+{
   if $ikey == '' or $skey == '' or $host == '' {
     fail('ikey, skey, and host must all be defined.')
   }
