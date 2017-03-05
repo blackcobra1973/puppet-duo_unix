@@ -33,6 +33,11 @@ class duo_unix::portage {
   ### Add duo_unix ebuild to Portage Overlay
   ### Install duo_unix
   if $::duo_unix::manage_portage_ebuild {
+
+    file { $portage_overlay_dir:
+      ensure => directory,
+    }
+
     file { "${portage_overlay_dir}/duo_unix":
       ensure  => directory,
       recurse => true,
