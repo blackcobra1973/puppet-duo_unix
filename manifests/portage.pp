@@ -10,8 +10,10 @@
 #       make sure you add the ebuild content manually
 #       in your portage overlay.  Else this will fail.
 #
+# Requirement: this needs the ebuild from the following overlay:
+#              https://github.com/blackcobra1973/kd-gentoo-overlay.git
+#
 class duo_unix::portage {
-  $portage_overlay_dir = $::duo_unix::portage_overlay_dir
   $package_state = $::duo_unix::package_version
 
   if $::duo_unix::manage_ssh {
@@ -20,52 +22,7 @@ class duo_unix::portage {
     }
   }
 
-  ### Manage Portage Overlay dir
-  if $::duo_unix::manage_port_overlay_dir {
-    file { $portage_overlay_dir:
-      ensure => directory,
-      owner  => 'root',
-      group  => 'root',
-      mode   =>  '0755',
-    }
-  }
-
-  ### Add duo_unix ebuild to Portage Overlay
-  ### Install duo_unix
-  if $::duo_unix::manage_portage_ebuild {
-
-    file { $portage_overlay_dir:
-      ensure => directory,
-    }
-
-    file { "${portage_overlay_dir}/duo_unix":
-      ensure  => directory,
-      recurse => true,
-      purge   => true,
-      require => File[$portage_overlay_dir],
-      source  => 'puppet:///modules/duo_unix/duo_unix',
-      mode    => '0644',
-      owner   => 'root',
-      group   => 'root',
-    }
-
-    package { $duo_unix::duo_package:
-      ensure  => $package_state,
-      require =>  [
-                    File["${portage_overlay_dir}/duo_unix"],
-                    Exec['EIX-Update'],
-                  ],
-    }
-
-    exec { 'EIX-Update':
-      command     => '/usr/bin/eix-update -q',
-      refreshonly => true,
-      subscribe   => File["${portage_overlay_dir}/duo_unix"],
-    }
-  }
-  else {
-    package { $duo_unix::duo_packag:
-      ensure  => $package_state,
-    }
+  package { $duo_unix::duo_package:
+    ensure  => $package_state,
   }
 }
